@@ -1,2 +1,2 @@
 # textwar-py
-this is the util things of textwar
+this is python port of textwars

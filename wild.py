@@ -2,7 +2,7 @@ import random
 
 from PIL import Image, ImageDraw, ImageFont
 
-from map import Map, get_length, paste_image, get_ava
+from map import Map, get_length, get_ava
 
 
 class WildMap(Map):

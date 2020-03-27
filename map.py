@@ -22,13 +22,18 @@ class Map:
             self.array = array
         self.pic_footer = "#############################################\n私聊我输入指令进行操作" + \
                           "\nw=前进|" + "s=后退|\n" + "a=左走|" + "d=右走|"
-        self.pic_font_size = 20
+        self.pic_font_size = 30
         self.pic_width = 1100
         self.pic_height = 2000
         self.pic_back_ground_color = (255, 255, 255)
         self.pic_font_color = (0, 0, 0)
         self.file = "map"
-
+        self.unicode_font = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", self.pic_font_size)
+        self.unicode_font_2 = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", 46)
+        self.array_height = len(self.array)
+        self.array_weight = len(self.array[0])
+        self.pic_offset_x = 10
+        self.pic_offset_y = 10
     def __str__(self):
         return ''.join(sum(self.array, []))
 
@@ -46,20 +51,21 @@ class Map:
                     self.array[i][ia] = 0
                     file_ = get_ava(b)
                     im2 = Image.open(file_).convert("RGB")
-                    paste_image((10, 10), im, im2, i, ia)
+                    self.paste_image((10, 10), im, im2, i, ia)
         draw = ImageDraw.Draw(im)
         text = str(self)
-        unicode_font = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", self.pic_font_size)
-        unicode_font_2 = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", 46)
-        draw.text((10, 10), text, font=unicode_font, fill=self.pic_font_color)
-        draw.text((0, self.pic_height - 200), self.pic_footer, font=unicode_font_2, fill=self.pic_font_color)
+        draw.text((self.pic_offset_x, self.pic_offset_y), text, font=self.unicode_font, fill=self.pic_font_color)
+        draw.text((0, self.pic_height - 200), self.pic_footer, font=self.unicode_font_2, fill=self.pic_font_color)
         print("the end")
         self.save_image(im)
         return self
 
-def paste_image(edge, im, im2, x, y):
-    im2 = im2.resize((20, 20))
-    im.paste(im2, (int(edge[0] + y * 20), int(edge[1] + x * 22)))
+    def paste_image(self, im, im2, y , x):
+        size_offset = self.unicode_font.getoffset("　")
+        size = (self.unicode_font.getsize("　")[0], self.unicode_font.getsize("　")[1])
+        im2 = im2.resize(size)
+        print(int(self.pic_offset_x +(size[1] * x)), int(self.pic_offset_x +(size[0] * y)))
+        im.paste(im2, box=(int(self.pic_offset_x +(size_offset[0] *(x/10) +size[0] * x)), int(self.pic_offset_y +(size_offset[1] *(y/(self.pic_font_size/2)) + size[1] * y))))
 
 
 def get_length(n):

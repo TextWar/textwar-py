@@ -1,6 +1,6 @@
 from PIL import ImageDraw, ImageFont
 from PIL import Image
-from map import Map, get_length, paste_image, get_ava
+from map import Map, get_length, get_ava
 
 
 class Town(Map):
@@ -8,10 +8,10 @@ class Town(Map):
         self.hash_map = hash_map
         super(Town, self).__init__(kwargs)
         self.json_file = ""
-    def update(self):
-        im = Image.new("RGB", (self.pic_width, self.pic_height), self.pic_back_ground_color)
         if len(self.array) == 1:
             self.array = self.array[0]
+    def update(self):
+        im = Image.new("RGB", (self.pic_width, self.pic_height), self.pic_back_ground_color)
         for i, a in enumerate(self.array):
             a.append('\n')
             for ia, b in enumerate(a):
@@ -29,11 +29,14 @@ class Town(Map):
                             replaced = replaced + ""
                         self.array[i][ia] = replaced
                         break
-                if get_length(b) >= 5:
-                    self.array[i][ia] = 0
-                    file_ = get_ava(b)
-                    im2 = Image.open(file_).convert("RGB")
-                    paste_image((10, 10), im, im2, i, ia)
+                try:
+                    if b.isalnum():
+                        self.array[i][ia] = "*　"
+                        file_ = get_ava(b)
+                        im2 = Image.open(file_).convert("RGB")
+                        self.paste_image(im, im2, i, ia)
+                except:
+                    pass
         draw = ImageDraw.Draw(im)
         text = str(self)
         unicode_font = ImageFont.truetype("/usr/share/fonts/Unifont/Unifont.ttf", self.pic_font_size)

@@ -17,8 +17,7 @@ class Town(Map):
             for ia, b in enumerate(a):
                 for ic, c in enumerate(self.hash_map):
                     # print(c,ic)
-                    if b == ic:
-                        replaced = ""
+                    if b == str(ic):
                         if c.startswith('*'):
                             replaced = c[1:]
                         else:
@@ -29,21 +28,18 @@ class Town(Map):
                             replaced = replaced + ""
                         self.array[i][ia] = replaced
                         break
-                try:
-                    if b.isalnum():
-                        self.array[i][ia] = "*　"
-                        file_ = get_ava(b)
-                        im2 = Image.open(file_).convert("RGB")
-                        self.paste_image(im, im2, i, ia)
-                except:
-                    pass
+                    try:
+                        if len(b) >= 5:
+                            self.array[i][ia] = "　"
+                            file_ = get_ava(b)
+                            im2 = Image.open(file_).convert("RGB")
+                            self.paste_image(im, im2, i, ia)
+                    except:
+                        pass
         draw = ImageDraw.Draw(im)
         text = str(self)
         unicode_font = ImageFont.truetype("/usr/share/fonts/Unifont/Unifont.ttf", self.pic_font_size)
-        # unicode_font.
-        unicode_font_2 = ImageFont.truetype("/usr/share/fonts/steam-fonts/arial.ttf", 46)
         draw.text((10, 10), text, font=unicode_font, fill=self.pic_font_color)
-        draw.text((0, self.pic_height - 200), self.pic_footer, font=unicode_font_2, fill=self.pic_font_color)
         self.save_image(im)
         return self
     # def get_map(self):

@@ -7,7 +7,7 @@ from map import Map, get_length, get_ava
 
 class WildMap(Map):
     def __init__(self, *kwargs):
-        super().__init__(kwargs)
+        super().__init__(*kwargs)
         self.array_height = 80
         self.array_weight = 50
 

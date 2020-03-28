@@ -29,7 +29,7 @@ if __name__ == "__main__":
             try:
                 map_ = wild.WildMap()
                 map_.init_array()
-                a = {"hashmap": ["*　","▉▉"], "type": 1, "name": "some", "author": "someone behind the screen", "version": "b1",
+                a = {"hashmap": ["*　","░░"], "type": 2, "name": "some", "author": "someone behind the screen", "version": "b1",
                      "map": map_.generate().array}
                 return json.dumps(a)
             except:

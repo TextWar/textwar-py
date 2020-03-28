@@ -2,7 +2,7 @@ import math
 import os
 from PIL import Image, ImageDraw, ImageFont
 import requests
-
+from io import BytesIO
 
 def get_ava(qq):
     url = "http://q1.qlogo.cn/g?b=qq&nk={}&s=100".format(qq)
@@ -27,8 +27,9 @@ class Map:
         self.pic_back_ground_color = (255, 255, 255)
         self.pic_font_color = (0, 0, 0)
         self.file = "map"
-        self.unicode_font = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", self.pic_font_size)
-        self.unicode_font_2 = ImageFont.truetype("/usr/share/fonts/adobe-source-code-pro/SourceCodePro-Regular.otf", 46)
+        file = open("./Unifont.ttf", "rb")
+        bytes_font = BytesIO(file.read())
+        self.unicode_font = ImageFont.truetype(bytes_font, self.pic_font_size)
         if self.array != []:
             self.array_height = len(self.array)
             self.array_weight = len(self.array[0])

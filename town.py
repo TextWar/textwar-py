@@ -38,8 +38,7 @@ class Town(Map):
                         pass
         draw = ImageDraw.Draw(im)
         text = str(self)
-        unicode_font = ImageFont.truetype("/usr/share/fonts/Unifont/Unifont.ttf", self.pic_font_size)
-        draw.text((10, 10), text, font=unicode_font, fill=self.pic_font_color)
+        draw.text((10, 10), text, font=self.unicode_font, fill=self.pic_font_color)
         self.save_image(im)
         return self
     # def get_map(self):
